@@ -95,6 +95,21 @@ describe GildedRose do
       end
     end
 
+    context 'when item is conjured' do
+      context 'and item is within sell-by' do
+        it 'decreases quality twice as fast as usual (-2)' do
+          gr = start_with_item('Conjured hair shirt', 5, 10)
+          expect { gr.update_quality }.to change { gr.items.first.quality }.by -2
+        end
+      end
+      context 'and item is past sell-by' do
+        it 'decreases quality twice as fast as usual (-4)' do
+          gr = start_with_item('Conjured hair shirt', 0, 10)
+          expect { gr.update_quality }.to change { gr.items.first.quality }.by -4
+        end
+      end
+    end
+
     context 'when item is legendary item' do
       it "doesn't change quality" do
         gr = start_with_item('Sulfuras, Hand of Ragnaros')
