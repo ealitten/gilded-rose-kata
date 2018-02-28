@@ -80,6 +80,12 @@ describe GildedRose do
           gr = start_with_item('Aged Brie', 10, 10)
           expect { gr.update_quality }.to change { gr.items.first.quality }.by +1
         end
+        context 'and brie is past sell-by' do
+          it 'increases quality by 2' do
+            gr = start_with_item('Aged Brie', 0, 10)
+            expect { gr.update_quality }.to change { gr.items.first.quality }.by +2
+          end
+        end
       end
       context 'and quality is 50 or greater' do
         it "doesn't change quality" do
