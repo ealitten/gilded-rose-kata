@@ -22,9 +22,9 @@ class GildedRose
         decrease_quality(item)
       end
 
-      decrease_sell_in(item)
+      
 
-      if item.sell_in < 0
+      if item.sell_in <= 0
         case item.name
         when "Aged Brie"
           increase_quality(item)
@@ -34,6 +34,8 @@ class GildedRose
           decrease_quality(item)
         end
       end
+
+      decrease_sell_in(item)
 
     end
   end
