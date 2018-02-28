@@ -15,9 +15,17 @@ describe GildedRose do
         gr = start_with_item('Backstage passes to a TAFKAL80ETC concert')
         expect { gr.update_quality }.to change { gr.items.first.sell_in }.by -1
       end
-      it 'increases quality by 1' do
-        gr = start_with_item('Backstage passes to a TAFKAL80ETC concert', 20, 10)
-        expect { gr.update_quality }.to change { gr.items.first.quality }.by +1
+      context 'and quality is lower than 50' do
+        it 'increases quality by 1' do
+          gr = start_with_item('Backstage passes to a TAFKAL80ETC concert', 20, 10)
+          expect { gr.update_quality }.to change { gr.items.first.quality }.by +1
+        end
+      end
+      context 'and quality is 50 or greater' do
+        it "doesn't change quality" do
+          gr = start_with_item('Backstage passes to a TAFKAL80ETC concert', 10, 50)
+          expect { gr.update_quality }.not_to change { gr.items.first.quality }
+        end
       end
     end
 
@@ -26,9 +34,17 @@ describe GildedRose do
         gr = start_with_item('Aged Brie')
         expect { gr.update_quality }.to change { gr.items.first.sell_in }.by -1
       end
-      it 'increases quality by 1' do
-        gr = start_with_item('Aged Brie', 10, 10)
-        expect { gr.update_quality }.to change { gr.items.first.quality }.by +1
+      context 'and quality is lower than 50' do
+        it 'increases quality by 1' do
+          gr = start_with_item('Aged Brie', 10, 10)
+          expect { gr.update_quality }.to change { gr.items.first.quality }.by +1
+        end
+      end
+      context 'and quality is 50 or greater' do
+        it "doesn't change quality" do
+          gr = start_with_item('Aged Brie', 0, 50)
+          expect { gr.update_quality }.not_to change { gr.items.first.quality }
+        end
       end
     end
 
@@ -48,9 +64,17 @@ describe GildedRose do
         gr = start_with_item('Hair shirt', 5, 10)
         expect { gr.update_quality }.to change { gr.items.first.sell_in }.by -1
       end
-      it 'decreases quality by 1' do
-        gr = start_with_item('Hair shirt', 5, 10)
-        expect { gr.update_quality }.to change { gr.items.first.quality }.by -1
+      context 'and quality is greater than 0' do
+        it 'decreases quality by 1' do
+          gr = start_with_item('Hair shirt', 5, 10)
+          expect { gr.update_quality }.to change { gr.items.first.quality }.by -1
+        end
+      end
+      context 'and quality is 0' do
+        it "doesn't change quality" do
+          gr = start_with_item('Hair shirt', 0, 0)
+          expect { gr.update_quality }.not_to change { gr.items.first.quality }
+        end
       end
     end
   end
