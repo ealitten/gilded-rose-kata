@@ -24,6 +24,12 @@ class GildedRose
         when 1..5 then increase_quality(item, 3)
         else item.quality = 0
         end
+      when /^[Cc]onjured\b\w*/
+        if item.sell_in > 0
+          decrease_quality(item, 2)
+        else
+          decrease_quality(item, 4)
+        end
       else
         if item.sell_in > 0
           decrease_quality(item, 1)
