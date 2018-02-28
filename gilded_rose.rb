@@ -15,46 +15,69 @@ class GildedRose
       when "Sulfuras, Hand of Ragnaros"
         next
       when "Aged Brie"
-        if item.sell_in > 0
-          increase_quality(item, 1)
-        else
-          increase_quality(item, 2)
-        end
+        update_aged_brie(item)
       when "Backstage passes to a TAFKAL80ETC concert"
-        case item.sell_in
-        when 11..Float::INFINITY then increase_quality(item, 1)
-        when 6..10 then increase_quality(item, 2)
-        when 1..5 then increase_quality(item, 3)
-        else item.quality = 0
-        end
+        update_backstage_passes(item)
       when /^[Cc]onjured\b\w*/
-        if item.sell_in > 0
-          decrease_quality(item, 2)
-        else
-          decrease_quality(item, 4)
-        end
+        update_conjured_item(item)
       else
-        if item.sell_in > 0
-          decrease_quality(item, 1)
-        else
-          decrease_quality(item, 2)
-        end
+        update_normal_item(item)
       end
       decrease_sell_in(item)
     end
   end
-end
 
-def increase_quality(item, increment = 1)
+  private
+
+  def update_backstage_passes(item)
+    case item.sell_in
+      when 11..Float::INFINITY then increase_quality(item, 1)
+      when 6..10 then increase_quality(item, 2)
+      when 1..5 then increase_quality(item, 3)
+      else item.quality = 0
+      end
+  end
+
+  def update_aged_brie(item)
+    if in_date?(item.sell_in)
+      increase_quality(item, 1)
+    else
+      increase_quality(item, 2)
+    end
+  end
+
+  def update_conjured_item(item)
+    if in_date?(item.sell_in)
+      decrease_quality(item, 2)
+    else
+      decrease_quality(item, 4)
+    end
+  end
+
+  def update_normal_item(item)
+    if in_date?(item.sell_in)
+      decrease_quality(item, 1)
+    else
+      decrease_quality(item, 2)
+    end
+  end
+
+  def increase_quality(item, increment = 1)
     increment.times { item.quality += 1 if item.quality < MAX_QUALITY }
-end
+  end
 
-def decrease_quality(item, increment = 1)
+  def decrease_quality(item, increment = 1)
     increment.times { item.quality -= 1 if item.quality > MIN_QUALITY }
-end
+  end
 
-def decrease_sell_in(item)
-  item.sell_in -= 1
+  def decrease_sell_in(item)
+    item.sell_in -= 1
+  end
+
+  def in_date?(sell_in)
+    sell_in > 0
+  end
+
 end
 
 class Item
