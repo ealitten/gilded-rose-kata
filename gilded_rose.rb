@@ -25,19 +25,18 @@ class GildedRose
       decrease_sell_in(item)
 
       if item.sell_in < 0
-        if item.name != "Aged Brie"
-          if item.name != "Backstage passes to a TAFKAL80ETC concert"
-            decrease_quality(item)
-          else
-            item.quality = 0
-          end
-        else
+        case item.name
+        when "Aged Brie"
           increase_quality(item)
+        when "Backstage passes to a TAFKAL80ETC concert"
+          item.quality = 0
+        else
+          decrease_quality(item)
         end
       end
+
     end
   end
-
 end
 
 def increase_quality(item)
