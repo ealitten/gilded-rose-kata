@@ -21,3 +21,15 @@ We have recently signed a supplier of conjured items. This requires an update to
 - “Conjured” items degrade in Quality twice as fast as normal items
 
 Feel free to make any changes to the UpdateQuality method and add any new code as long as everything still works correctly. However, do not alter the Item class or Items property as those belong to the goblin in the corner who will insta-rage and one-shot you as he doesn’t believe in shared code ownership (you can make the UpdateQuality method and Items property static if you like, we’ll cover for you).
+
+## Approach
+
+1. Diagrammed original code
+2. Wrote basic tests for the original update_quality method, including text-based approval test (see below)
+4. Start refactoring code for readability, without changing structure
+5. As the code became more clear, including how it diverges from the spec, wrote further tests, including for some edge cases
+6. Once I was satisfied the code was fully covered, I started refactoring in small steps, checking the tests and text-based golden master each time.
+7. Refactored original nest of if statements into one case...then statement, which calls a separate method for each special item
+8. To ensure single responsibility, I extracted these into an ItemUpdater class and set of sub-classes to handle different special items
+
+**Text-based approval testing**: I used the output of `texttest_fixture.rb` to produce 'golden master' - after all changes, I compared the output of `texttest_fixture.rb` to the golden master using the `diff` tool in bash. If they didn't match, the test failed, since all refactoring changes shouldn't change the output of the program.
