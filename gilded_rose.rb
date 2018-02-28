@@ -2,6 +2,9 @@ class GildedRose
 
   attr_reader :items
 
+  MAX_QUALITY = 50
+  MIN_QUALITY = 0
+
   def initialize(items)
     @items = items
   end
@@ -43,11 +46,11 @@ class GildedRose
 end
 
 def increase_quality(item, increment = 1)
-  increment.times { item.quality += 1 if item.quality < 50 }
+    increment.times { item.quality += 1 if item.quality < MAX_QUALITY }
 end
 
 def decrease_quality(item, increment = 1)
-  increment.times { item.quality -= 1 if item.quality > 0 }
+    increment.times { item.quality -= 1 if item.quality > MIN_QUALITY }
 end
 
 def decrease_sell_in(item)
