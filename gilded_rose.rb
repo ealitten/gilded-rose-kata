@@ -1,7 +1,6 @@
 require_relative 'item'
 
 class GildedRose
-
   attr_reader :items
 
   MAX_QUALITY = 50
@@ -11,14 +10,14 @@ class GildedRose
     @items = items
   end
 
-  def update_quality()
+  def update_quality
     @items.each do |item|
       case item.name
-      when "Sulfuras, Hand of Ragnaros"
+      when 'Sulfuras, Hand of Ragnaros'
         next
-      when "Aged Brie"
+      when 'Aged Brie'
         update_aged_brie(item)
-      when "Backstage passes to a TAFKAL80ETC concert"
+      when 'Backstage passes to a TAFKAL80ETC concert'
         update_backstage_passes(item)
       when /^[Cc]onjured\b\w*/
         update_conjured_item(item)
@@ -33,11 +32,11 @@ class GildedRose
 
   def update_backstage_passes(item)
     case item.sell_in
-      when 11..Float::INFINITY then increase_quality(item, 1)
-      when 6..10 then increase_quality(item, 2)
-      when 1..5 then increase_quality(item, 3)
-      else item.quality = 0
-      end
+    when 11..Float::INFINITY then increase_quality(item, 1)
+    when 6..10 then increase_quality(item, 2)
+    when 1..5 then increase_quality(item, 3)
+    else item.quality = 0
+    end
   end
 
   def update_aged_brie(item)
@@ -79,5 +78,4 @@ class GildedRose
   def in_date?(sell_in)
     sell_in > 0
   end
-
 end
