@@ -15,7 +15,7 @@ describe GildedRose do
     end
 
     context 'Aged Brie' do
-      it 'uses deadline item updater' do
+      it 'uses aged item updater' do
         @item = Item.new('Aged Brie', 20, 10)
         gilded_rose = GildedRose.new([@item])
         gilded_rose.update_quality
@@ -24,16 +24,16 @@ describe GildedRose do
     end
 
     context 'Conjured hair shirt' do
-      it 'uses deadline item updater' do
+      it 'uses conjured item updater' do
         @item = Item.new('Conjured hair shirt', 20, 10)
         gilded_rose = GildedRose.new([@item])
         gilded_rose.update_quality
         expect(gilded_rose.updater).to be_an_instance_of(ConjuredItemUpdater)
-    end
+      end
     end
 
     context 'Sulfuras, Hand of Ragnaros' do
-      it 'uses deadline item updater' do
+      it 'uses legendary item updater' do
         @item = Item.new('Sulfuras, Hand of Ragnaros', 20, 10)
         gilded_rose = GildedRose.new([@item])
         gilded_rose.update_quality
@@ -42,7 +42,7 @@ describe GildedRose do
     end
 
     context 'Sulfuras, Hand of Ragnaros' do
-      it 'uses normalitem updater' do
+      it 'uses normal item updater' do
         @item = Item.new('Hair shirt', 20, 10)
         gilded_rose = GildedRose.new([@item])
         gilded_rose.update_quality
