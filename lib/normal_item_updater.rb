@@ -1,3 +1,5 @@
+require_relative 'item_updater'
+
 class NormalItemUpdater < ItemUpdater
 
   def update_quality

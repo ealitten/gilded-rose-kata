@@ -1,3 +1,5 @@
+require_relative 'item_updater'
+
 class AgedItemUpdater < ItemUpdater
 
   def update_quality

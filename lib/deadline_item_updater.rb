@@ -1,3 +1,5 @@
+require_relative 'item_updater'
+
 class DeadlineItemUpdater < ItemUpdater
 
   def update_quality

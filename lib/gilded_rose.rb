@@ -8,6 +8,7 @@ require_relative 'conjured_item_updater'
 
 class GildedRose
   attr_reader :items
+  attr_reader :updater
 
   def initialize(items)
     @items = items
